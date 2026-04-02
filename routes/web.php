@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\AdController;
 use App\Http\Controllers\Admin\FacilityController;
+use App\Http\Controllers\Admin\PollController;
 use App\Http\Controllers\OCRController;
 use App\Http\Controllers\VisionOCRController;
 use App\Http\Controllers\TextractController;
@@ -118,6 +119,13 @@ Route::middleware('admin')->group(function () {
     Route::post('/update-event-status',[AdController::class, 'update_event_status']);
     
     Route::resource('/facility', FacilityController::class);
+
+    // Polls & Surveys
+    Route::resource('/poll', PollController::class)->only(['index', 'store', 'show', 'destroy']);
+    Route::post('/poll/{id}/activate', [PollController::class, 'activate'])->name('poll.activate');
+    Route::post('/poll/{id}/close', [PollController::class, 'close'])->name('poll.close');
+    Route::post('/poll/{id}/release-results', [PollController::class, 'releaseResults'])->name('poll.releaseResults');
+    Route::post('/poll/{id}/update-expiry', [PollController::class, 'updateExpiry'])->name('poll.updateExpiry');
 
 	Route::resource('/notification', NotificationController::class);
     Route::resource('/setting',SettingController::class);
