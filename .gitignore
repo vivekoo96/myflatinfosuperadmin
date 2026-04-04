@@ -8,3 +8,11 @@ composer.phar
 composer-setup.php
 error_log
 /sql
+/storage
+/tests
+/.vscode
+/.idea
+/.vscode/*
+/.idea/*
+.DS_Store
+Thumbs.db   

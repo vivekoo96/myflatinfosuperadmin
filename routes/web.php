@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\AdController;
 use App\Http\Controllers\Admin\FacilityController;
 use App\Http\Controllers\Admin\PollController;
+use App\Http\Controllers\Admin\GuideVideoController;
 use App\Http\Controllers\OCRController;
 use App\Http\Controllers\VisionOCRController;
 use App\Http\Controllers\TextractController;
@@ -119,6 +120,11 @@ Route::middleware('admin')->group(function () {
     Route::post('/update-event-status',[AdController::class, 'update_event_status']);
     
     Route::resource('/facility', FacilityController::class);
+
+    // Guided Video Tutorials
+    Route::get('/guide-video', [GuideVideoController::class, 'index'])->name('guide-video.index');
+    Route::post('/guide-video', [GuideVideoController::class, 'store'])->name('guide-video.store');
+    Route::post('/guide-video/{id}', [GuideVideoController::class, 'destroy'])->name('guide-video.destroy');
 
     // Polls & Surveys
     Route::resource('/poll', PollController::class)->only(['index', 'store', 'show', 'destroy']);
