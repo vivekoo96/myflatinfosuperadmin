@@ -173,7 +173,7 @@
                             </button>
                           @endif
 
-                          @if($poll->status === 'closed' && $poll->created_by == Auth::id())
+@if($poll->status === 'closed')
                             <button class="btn btn-sm btn-primary mb-1 btn-release"
                               data-id="{{ $poll->id }}" title="Release Results">
                               <i class="fa fa-unlock"></i>

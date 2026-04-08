@@ -198,10 +198,6 @@ class PollController extends Controller
     {
         $poll = Poll::findOrFail($id);
 
-        if ($poll->created_by !== Auth::id()) {
-            return response()->json(['error' => 'Only the poll creator can release results.'], 403);
-        }
-
         if ($poll->status !== 'closed') {
             return response()->json(['error' => 'Poll must be closed before releasing results.'], 422);
         }
