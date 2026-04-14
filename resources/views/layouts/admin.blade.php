@@ -537,13 +537,6 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('guide-video.index') }}" class="nav-link {{ request()->is('guide-video*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-play-circle"></i>
-              <p>Guide Videos</p>
-            </a>
-          </li>
-
-          <li class="nav-item">
             <a href="{{url('logout')}}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>Logout</p>
