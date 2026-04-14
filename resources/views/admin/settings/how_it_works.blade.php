@@ -183,9 +183,7 @@
                   <div class="form-group">
                     <label>Video Type <span class="text-danger">*</span></label>
                     <select name="video_type" class="form-control" required>
-                      <option value="youtube" {{ $video->video_type == 'youtube' ? 'selected' : '' }}>YouTube</option>
-                      <option value="vimeo" {{ $video->video_type == 'vimeo' ? 'selected' : '' }}>Vimeo</option>
-                      <option value="other" {{ $video->video_type == 'other' ? 'selected' : '' }}>Other</option>
+                      <option value="youtube" selected>YouTube</option>
                     </select>
                   </div>
                   <div class="form-group">
@@ -279,10 +277,7 @@
           <div class="form-group">
             <label>Video Type <span class="text-danger">*</span></label>
             <select name="video_type" class="form-control" required>
-              <option value="">Select Type</option>
-              <option value="youtube">YouTube</option>
-              <option value="vimeo">Vimeo</option>
-              <option value="other">Other</option>
+              <option value="youtube" selected>YouTube</option>
             </select>
           </div>
           <div class="form-group">
