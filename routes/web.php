@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\VideoTutorialController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -143,8 +144,13 @@ Route::middleware('admin')->group(function () {
     Route::post('/update-terms-conditions',[SettingController::class, 'update_terms_conditions']);
     Route::get('/about-us',[SettingController::class, 'about_us']);
     Route::post('/update-about-us',[SettingController::class, 'update_about_us']);
-    Route::get('/how-it-works',[SettingController::class, 'how_it_works']);
-    Route::post('/update-how-it-works',[SettingController::class, 'update_how_it_works']);
+    Route::get('/how-it-works', [SettingController::class, 'how_it_works']);
+    Route::post('/video-tutorial/module', [VideoTutorialController::class, 'storeModule'])->name('video-tutorial.store-module');
+    Route::post('/video-tutorial/module/{id}/update', [VideoTutorialController::class, 'updateModule'])->name('video-tutorial.update-module');
+    Route::post('/video-tutorial/module/{id}/delete', [VideoTutorialController::class, 'destroyModule'])->name('video-tutorial.destroy-module');
+    Route::post('/video-tutorial/store', [VideoTutorialController::class, 'store'])->name('video-tutorial.store');
+    Route::post('/video-tutorial/{id}/update', [VideoTutorialController::class, 'update'])->name('video-tutorial.update');
+    Route::post('/video-tutorial/{id}/delete', [VideoTutorialController::class, 'destroy'])->name('video-tutorial.destroy');
     Route::get('/return-and-refund-policy',[SettingController::class, 'return_and_refund_policy']);
     Route::post('/update-return-and-refund-policy',[SettingController::class, 'update_return_and_refund_policy']);
     Route::get('/accidental-policy',[SettingController::class, 'accidental_policy']);

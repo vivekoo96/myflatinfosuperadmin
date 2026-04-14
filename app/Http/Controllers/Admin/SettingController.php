@@ -265,8 +265,8 @@ class SettingController extends Controller
     
     public function how_it_works()
     {
-        $how_it_works = Setting::pluck('how_it_works')->first();
-        return view('admin.settings.how_it_works',compact('how_it_works'));
+        $modules = \App\Models\VideoModule::with('videos')->orderBy('created_at', 'asc')->get();
+        return view('admin.settings.how_it_works', compact('modules'));
     }
     
     public function update_how_it_works(Request $request)
