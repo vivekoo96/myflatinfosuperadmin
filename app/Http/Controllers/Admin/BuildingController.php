@@ -184,9 +184,8 @@ $validation = \Validator::make($request->all(), $rules, $messages);
             $building->licence_key = Str::random(64);
             $building->no_of_flats = 0;
             $building->no_of_logins = 0;
-            // Seed max_activity_posts from global settings
-            $setting = Setting::first();
-            $building->max_activity_posts = $setting->max_activity_posts ?? 5;
+            // Default max activity posts per user
+            $building->max_activity_posts = 5;
         }
         $building->user_id = $user->id;
         $building->save();

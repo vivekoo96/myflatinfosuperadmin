@@ -133,14 +133,6 @@
                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Max Activity Posts Per User</label>
-                                <input type="text" class="form-control" name="max_activity_posts" value="{{$setting->max_activity_posts}}"
-                                onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
-                                <small class="form-text text-muted">Maximum number of activity posts a user can create (default: 5)</small>
-                            </div>
-                        </div>
 
                     </div>
                     <div class="row">
