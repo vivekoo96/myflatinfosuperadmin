@@ -31,8 +31,9 @@ class SettingController extends Controller
             'bussiness_name' => 'required',
             'logo' => 'nullable|image|max:2048',
             'favicon' => 'nullable|image|max:2048',
-            'pagination' => 'required|int|min:10'
-            
+            'pagination' => 'required|int|min:10',
+            'max_activity_posts' => 'required|int|min:1'
+
         ];
         $validation = \Validator::make($request->all(), $rules);
     
@@ -64,6 +65,7 @@ class SettingController extends Controller
         $setting->call_support_number = $request->call_support_number;
         $setting->whatsapp_support_number = $request->whatsapp_support_number;
         $setting->pagination = $request->pagination;
+        $setting->max_activity_posts = $request->max_activity_posts;
         // if($request->hasFile('logo')) {
         //     $file= $request->file('logo');
         //     $allowedfileExtension=['jpeg','jpeg','png'];
