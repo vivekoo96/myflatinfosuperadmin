@@ -124,7 +124,8 @@
                                         data-no_of_other_users="{{$building->no_of_other_users}}" data-valid_till="{{$building->valid_till}}" data-licence_key="{{$building->licence_key}}" data-max_activity_posts="{{$building->max_activity_posts}}" data-permissions="{{ json_encode($building->permissions->pluck('id')) }}"><i class="fa fa-cog"></i></button>
                                         
                                         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#accountModal" data-id="{{$building->id}}" data-payment_is_active="{{$building->payment_is_active}}" data-maintenance_is_active="{{$building->maintenance_is_active}}"
-                                        data-corpus_is_active="{{$building->corpus_is_active}}" data-donation_is_active="{{$building->donation_is_active}}" data-facility_is_active="{{$building->facility_is_active}}" data-other_is_active="{{$building->other_is_active}}">
+                                        data-corpus_is_active="{{$building->corpus_is_active}}" data-donation_is_active="{{$building->donation_is_active}}" data-facility_is_active="{{$building->facility_is_active}}" data-other_is_active="{{$building->other_is_active}}"
+                                        data-gst_maintenance_enabled="{{$building->gst_maintenance_enabled}}" data-gst_essentials_enabled="{{$building->gst_essentials_enabled}}" data-gst_bookings_enabled="{{$building->gst_bookings_enabled}}">
                                         <i class="fa fa-credit-card-alt"></i></button>
 
                                         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#classifiedModal" data-id="{{$building->id}}" data-within_for_month="{{$building->within_for_month}}" 
@@ -443,6 +444,31 @@
             </select>
           </div>
 
+          <hr>
+          <h5>GST Configuration</h5>
+
+          <div class="form-group">
+            <label for="name" class="col-form-label">GST on Maintenance:</label>
+            <select name="gst_maintenance_enabled" id="gst_maintenance_enabled" class="form-control" required>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-form-label">GST on Essentials:</label>
+            <select name="gst_essentials_enabled" id="gst_essentials_enabled" class="form-control" required>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="name" class="col-form-label">GST on Bookings:</label>
+            <select name="gst_bookings_enabled" id="gst_bookings_enabled" class="form-control" required>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
           <input type="hidden" name="id" id="edit-id-3">
         </div>
         <div class="modal-footer">
@@ -656,8 +682,11 @@
       $('#donation_is_active').val(button.data('donation_is_active'));
       $('#facility_is_active').val(button.data('facility_is_active'));
       $('#other_is_active').val(button.data('other_is_active'));
+      $('#gst_maintenance_enabled').val(button.data('gst_maintenance_enabled'));
+      $('#gst_essentials_enabled').val(button.data('gst_essentials_enabled'));
+      $('#gst_bookings_enabled').val(button.data('gst_bookings_enabled'));
       $('.modal-title').text('Payment Options');
-      
+
     });
 
     $('#classifiedModal').on('show.bs.modal', function (event) {

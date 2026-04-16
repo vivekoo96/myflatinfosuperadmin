@@ -369,7 +369,10 @@ $validation = \Validator::make($request->all(), $rules, $messages);
         $building->donation_is_active = $request->donation_is_active;
         $building->facility_is_active = $request->facility_is_active;
         $building->other_is_active = $request->other_is_active;
-        
+        $building->gst_maintenance_enabled = $request->gst_maintenance_enabled ?? 'No';
+        $building->gst_essentials_enabled = $request->gst_essentials_enabled ?? 'No';
+        $building->gst_bookings_enabled = $request->gst_bookings_enabled ?? 'No';
+
         if($request->payment_is_active == 'No'){
             $setting = Setting::First();
             $building->razorpay_key = $setting->razorpay_key;
