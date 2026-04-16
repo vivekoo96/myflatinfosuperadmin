@@ -121,7 +121,7 @@
                                         data-phone="{{$building->phone}}" data-email="{{$building->user->email}}" data-city="{{$building->city_id}}" data-address="{{$building->address}}" data-status="{{$building->status}}" data-ba_id="{{$building->user_id}}"><i class="fa fa-edit"></i></button>
                                         
                                         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#settingModal" data-id="{{$building->id}}" data-no_of_flats="{{$building->no_of_flats}}" data-no_of_logins="{{$building->no_of_logins}}"
-                                        data-no_of_other_users="{{$building->no_of_other_users}}" data-valid_till="{{$building->valid_till}}" data-licence_key="{{$building->licence_key}}" data-permissions="{{ json_encode($building->permissions->pluck('id')) }}"><i class="fa fa-cog"></i></button>
+                                        data-no_of_other_users="{{$building->no_of_other_users}}" data-valid_till="{{$building->valid_till}}" data-licence_key="{{$building->licence_key}}" data-max_activity_posts="{{$building->max_activity_posts}}" data-permissions="{{ json_encode($building->permissions->pluck('id')) }}"><i class="fa fa-cog"></i></button>
                                         
                                         <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#accountModal" data-id="{{$building->id}}" data-payment_is_active="{{$building->payment_is_active}}" data-maintenance_is_active="{{$building->maintenance_is_active}}"
                                         data-corpus_is_active="{{$building->corpus_is_active}}" data-donation_is_active="{{$building->donation_is_active}}" data-facility_is_active="{{$building->facility_is_active}}" data-other_is_active="{{$building->other_is_active}}">
@@ -331,6 +331,12 @@
           <div class="form-group">
             <label for="name" class="col-form-label">Valid till:</label>
             <input type="date" name="valid_till" id="valid_till" class="form-control" min="{{ \Carbon\Carbon::now()->toDateString() }}" placeholder="Valid Till" required>
+          </div>
+
+          <div class="form-group">
+            <label for="max_activity_posts" class="col-form-label">Max Activity Posts Per User:</label>
+            <input type="number" name="max_activity_posts" id="max_activity_posts" class="form-control" min="1" step="1" pattern="[0-9]+" placeholder="Enter max activity posts (minimum 1)" onkeypress="return event.charCode >= 48 && event.charCode <= 57" value="5">
+            <small class="form-text text-muted">Maximum number of community activity posts a user can create</small>
           </div>
 
           <div class="form-group col-md-12">
@@ -625,6 +631,7 @@
       $('#no_of_other_users').val(button.data('no_of_other_users'));
       $('#valid_till').val(button.data('valid_till'));
       $('#licence_key').val(button.data('licence_key'));
+      $('#max_activity_posts').val(button.data('max_activity_posts') || 5);
       $('.modal-title').text('Licence Configuration');
       // Uncheck all facilities first
       $('input[name="permissions[]"]').prop('checked', false);

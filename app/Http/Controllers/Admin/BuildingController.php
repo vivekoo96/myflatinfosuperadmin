@@ -327,6 +327,9 @@ $validation = \Validator::make($request->all(), $rules, $messages);
         $building->no_of_logins = $request->no_of_logins;
         $building->no_of_other_users = $request->no_of_other_users;
         $building->valid_till = $request->valid_till;
+        if($request->max_activity_posts){
+            $building->max_activity_posts = $request->max_activity_posts;
+        }
         $building->save();
         
         // Handle permissions
