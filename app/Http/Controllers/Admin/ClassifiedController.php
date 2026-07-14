@@ -42,7 +42,7 @@ class ClassifiedController extends Controller
 
     public function index()
     {
-        $classifieds = Classified::with(['user', 'building'])->orderBy('id','asc')->withTrashed()->get();
+        $classifieds = Classified::with(['user', 'building'])->orderBy('id','desc')->withTrashed()->get();
         return view('admin.classified.index',compact('classifieds'));
     }
 
