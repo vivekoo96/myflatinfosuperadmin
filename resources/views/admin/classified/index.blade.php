@@ -100,9 +100,21 @@
                     <td>{{$item->desc}}</td>
                     <td>{{$item->status}}</td>
                     <td>
+                      @php
+                          $photoUrls = [];
+                          if (!empty($photos)) {
+                              foreach ($photos as $photoObj) {
+                                  if (is_array($photoObj)) {
+                                      $photoUrls[] = $photoObj['photo'];
+                                  } elseif (is_object($photoObj)) {
+                                      $photoUrls[] = $photoObj->photo;
+                                  }
+                              }
+                          }
+                      @endphp
                       <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addModal" data-id="{{$item->id}}" data-title="{{$item->title}}" data-desc="{{$item->desc}}"  
                        data-status="{{$item->status}}" data-reason="{{$item->reason}}" 
-                      data-block_id="{{$item->block_id}}" data-flat_id="{{$item->flat_id}}" data-category="{{$item->category}}"><i class="fa fa-edit"></i></button>
+                      data-block_id="{{$item->block_id}}" data-flat_id="{{$item->flat_id}}" data-category="{{$item->category}}" data-photos="{{ json_encode($photoUrls) }}"><i class="fa fa-edit"></i></button>
                       @if($item->deleted_at)
                       <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#deleteModal" data-id="{{$item->id}}" data-action="restore"><i class="fa fa-undo"></i></button>
                       @else
@@ -214,6 +226,11 @@
             <label for="name" class="col-form-label">Photos: <small>(Optional - Max 2MB per image, JPG/PNG/JPEG only)</small></label>
             <input type="file" name="photos[]" id="photos" class="form-control" accept="image/jpeg,image/jpg,image/png" multiple>
             <!--<small class="form-text text-muted">Optional. Image format: JPG, PNG, JPEG. Maximum size: 2MB per image.</small>-->
+          </div>
+
+          <div class="form-group" id="existing-photos-container" style="display: none;">
+            <label class="col-form-label">Existing Photos:</label>
+            <div id="existing-photos-list" class="d-flex flex-wrap gap-2"></div>
           </div>
 
           <input type="hidden" name="id" id="edit-id">
@@ -378,6 +395,22 @@
       $('#status').val(button.data('status'));
       $('#reason').val(button.data('reason'));
       $('#image2').attr('src',button.data('image'));
+      
+      var photos = button.data('photos') || [];
+      $('#existing-photos-list').html('');
+      if (photos.length > 0) {
+        $('#existing-photos-container').show();
+        photos.forEach(function(photoUrl) {
+          $('#existing-photos-list').append(
+            '<div style="margin: 5px; position: relative; display: inline-block;">' +
+            '<img src="' + photoUrl + '" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;">' +
+            '</div>'
+          );
+        });
+      } else {
+        $('#existing-photos-container').hide();
+      }
+
       $('.modal-title').text('Add New Classified');
       
       // Reset building selection

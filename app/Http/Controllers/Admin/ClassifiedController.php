@@ -146,6 +146,7 @@ class ClassifiedController extends Controller
                     if (file_exists($oldFile2)) {
                         @unlink($oldFile2);
                     }
+                    \Storage::disk('s3')->delete($oldPhoto->getPhotoFilenameAttribute());
                     $oldPhoto->delete();
                 }
             }
