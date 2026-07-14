@@ -134,6 +134,21 @@ class ClassifiedController extends Controller
         }
         
         if ($request->hasFile('photos')) {
+            // If updating an existing classified, delete old photos first
+            if ($request->id) {
+                $existingPhotos = ClassifiedPhoto::where('classified_id', $classified->id)->get();
+                foreach ($existingPhotos as $oldPhoto) {
+                    $oldFile1 = public_path('images/' . $oldPhoto->getPhotoFilenameAttribute());
+                    $oldFile2 = public_path('images/classifieds/' . $oldPhoto->getPhotoFilenameAttribute());
+                    if (file_exists($oldFile1)) {
+                        @unlink($oldFile1);
+                    }
+                    if (file_exists($oldFile2)) {
+                        @unlink($oldFile2);
+                    }
+                    $oldPhoto->delete();
+                }
+            }
             foreach ($request->file('photos') as $file) {
                 $allowedfileExtension = ['jpeg', 'jpg', 'png'];
                 $extension = $file->getClientOriginalExtension();
