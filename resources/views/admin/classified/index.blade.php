@@ -53,6 +53,7 @@
                   <tr>
                     <th>S No</th>
                     <th>Posted By</th>
+                    <th>Building</th>
                     <th>Category</th>
                     <th>Title</th>
                     <th>Image</th>
@@ -68,7 +69,14 @@
                   <?php $i++; ?>
                   <tr>
                     <td>{{$i}}</td>
-                    <td><a href="{{url('customer',$item->user_id)}}">{{$item->user->name}}</a></td>
+                    <td>
+                      @if($item->user)
+                        <a href="{{url('customer',$item->user_id)}}">{{$item->user->name}}</a>
+                      @else
+                        N/A
+                      @endif
+                    </td>
+                    <td>{{$item->building ? $item->building->name : 'All Buildings (Super Admin)'}}</td>
                     <td>{{$item->category}}</td>
                      
                     <td>{{$item->title}}</td>
@@ -92,7 +100,6 @@
                     <td>{{$item->desc}}</td>
                     <td>{{$item->status}}</td>
                     <td>
-                      <a href="{{route('classified.show',$item->id)}}" target="_blank"  class="btn btn-sm btn-warning"><i class="fa fa-eye"></i></a>
                       <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addModal" data-id="{{$item->id}}" data-title="{{$item->title}}" data-desc="{{$item->desc}}"  
                        data-status="{{$item->status}}" data-reason="{{$item->reason}}" 
                       data-block_id="{{$item->block_id}}" data-flat_id="{{$item->flat_id}}" data-category="{{$item->category}}"><i class="fa fa-edit"></i></button>

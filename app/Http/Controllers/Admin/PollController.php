@@ -18,6 +18,16 @@ use Carbon\Carbon;
 
 class PollController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (\Auth::user() && !\Auth::user()->hasPermission('menu.polls')) {
+                abort(403, 'Unauthorized action.');
+            }
+            return $next($request);
+        });
+    }
+
     // ─────────────────────────────────────────────────────────────
     // LIST
     // ─────────────────────────────────────────────────────────────

@@ -290,9 +290,14 @@ class CustomerController extends Controller
             ],422);
         }
         
-        $user = User::where('email',$request->email)->first();
+        $user = User::withTrashed()->where('email',$request->email)->first();
         
         if($user){
+            if($user->deleted_at){
+                return response()->json([
+                    'error' => 'This account has been deleted'
+                ],422);
+            }
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('MyApp')->accessToken;
                 $user->api_token = $token;

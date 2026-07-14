@@ -529,12 +529,14 @@
             </a>
           </li>
           @endif
+          @if($user->hasPermission('menu.polls'))
           <li class="nav-item">
             <a href="{{ route('poll.index') }}" class="nav-link {{ request()->is('poll*') ? 'active' : '' }}">
               <i class="nav-icon fa fa-bar-chart"></i>
               <p>Polls &amp; Surveys</p>
             </a>
           </li>
+          @endif
 
           <li class="nav-item">
             <a href="{{url('logout')}}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

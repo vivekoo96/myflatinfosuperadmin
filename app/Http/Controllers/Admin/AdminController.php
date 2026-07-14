@@ -127,8 +127,11 @@ class AdminController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        $user = User::whereIn('role',['super-admin','admin'])->where('email', $request->email)->first();
+        $user = User::withTrashed()->whereIn('role',['super-admin','admin'])->where('email', $request->email)->first();
         if($user){
+            if($user->deleted_at){
+                return redirect()->back()->with('error','Your account has been deleted. Please contact super admin.');
+            }
             if($user->role == 'admin' && $user->status == 'Inactive'){
                 return redirect()->back()->with('error','Your account is inactive please contact super admin');
             }
