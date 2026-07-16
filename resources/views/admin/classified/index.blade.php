@@ -72,6 +72,11 @@
                     <td>
                       @if($item->user)
                         <a href="{{url('customer',$item->user_id)}}">{{$item->user->name}}</a>
+                        @if($item->user->role == 'BA')
+                          <span class="badge badge-warning">Building Admin</span>
+                        @elseif($item->user->role == 'SA')
+                          <span class="badge badge-info">Super Admin</span>
+                        @endif
                       @else
                         N/A
                       @endif
