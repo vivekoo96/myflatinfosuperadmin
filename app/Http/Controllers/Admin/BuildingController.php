@@ -378,8 +378,13 @@ $validation = \Validator::make($request->all(), $rules, $messages);
             $building->razorpay_key = $setting->razorpay_key;
             $building->razorpay_secret = $setting->razorpay_secret;
         }else{
-            $building->razorpay_key = '';
-            $building->razorpay_secret = '';
+            $setting = Setting::First();
+            if ($building->razorpay_key == $setting->razorpay_key) {
+                $building->razorpay_key = '';
+            }
+            if ($building->razorpay_secret == $setting->razorpay_secret) {
+                $building->razorpay_secret = '';
+            }
         }
         $building->save();
 

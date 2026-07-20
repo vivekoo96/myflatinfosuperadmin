@@ -491,9 +491,9 @@
           @endif
           @if($user->hasPermission('menu.how.it.works'))
           <li class="nav-item">
-            <a href="{{url('how-it-works')}}" class="nav-link {{ request()->is('how-it-works*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-question-circle"></i>
-              <p>How it works</p>
+            <a href="{{ route('video-tutorials.index') }}" class="nav-link {{ request()->is('video-tutorials*') || request()->is('how-it-works*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-video"></i>
+              <p>Video Tutorials</p>
             </a>
           </li>
           @endif

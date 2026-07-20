@@ -84,6 +84,13 @@
                 </button>
               @endif
 
+              {{-- Reopen (closed / published) --}}
+              @if(in_array($poll->status, ['closed', 'published']) && !$poll->deleted_at)
+                <button class="btn btn-warning btn-sm btn-reopen" data-id="{{ $poll->id }}">
+                  <i class="fa fa-undo"></i> Restore
+                </button>
+              @endif
+
               @if(!$poll->deleted_at)
                 <button class="btn btn-secondary btn-sm btn-delete mt-1" data-id="{{ $poll->id }}" data-action="delete">
                   <i class="fa fa-trash"></i> Delete
@@ -211,6 +218,13 @@ $(function () {
     });
   });
 
+  $(document).on('click', '.btn-reopen', function () {
+    var id = $(this).data('id');
+    setConfirm('Restore Poll', 'Restore this poll? Voting will resume for all users.', 'btn-warning', function () {
+      pollAction('/poll/' + id + '/reopen', 'POST');
+    });
+  });
+
   $(document).on('click', '.btn-delete', function () {
     var id = $(this).data('id');
     var action = $(this).data('action');
@@ -229,13 +243,17 @@ $(function () {
     $.ajax({
       url: url, method: method, data: data,
       success: function () {
-        if (url.includes('release') || url.includes('activate') || url.includes('close')) {
-          location.reload();
-        } else {
-          window.location.href = '{{ route("poll.index") }}';
-        }
+        // Redirect to index so the Action column reflects the latest status
+        window.location.href = '{{ route("poll.index") }}';
       },
-      error: function (xhr) { alert(xhr.responseJSON ? xhr.responseJSON.error : 'Action failed.'); }
+      error: function (xhr) {
+        var json = xhr.responseJSON;
+        var msg = (json && json.error) ? json.error
+                : (json && json.message) ? json.message
+                : 'Action failed. The poll status may have already changed — the page will now refresh.';
+        alert(msg);
+        window.location.href = '{{ route("poll.index") }}';
+      }
     });
   }
 });

@@ -131,8 +131,11 @@ Route::middleware('admin')->group(function () {
     Route::resource('/poll', PollController::class)->only(['index', 'store', 'show', 'destroy']);
     Route::post('/poll/{id}/activate', [PollController::class, 'activate'])->name('poll.activate');
     Route::post('/poll/{id}/close', [PollController::class, 'close'])->name('poll.close');
+    Route::post('/poll/{id}/reopen', [PollController::class, 'reopen'])->name('poll.reopen');
     Route::post('/poll/{id}/release-results', [PollController::class, 'releaseResults'])->name('poll.releaseResults');
     Route::post('/poll/{id}/update-expiry', [PollController::class, 'updateExpiry'])->name('poll.updateExpiry');
+    Route::get('/poll/{id}/edit-data', [PollController::class, 'editData'])->name('poll.editData');
+    Route::post('/poll/{id}/update-draft', [PollController::class, 'updateDraft'])->name('poll.updateDraft');
 
 	Route::resource('/notification', NotificationController::class);
     Route::resource('/setting',SettingController::class);
@@ -144,7 +147,10 @@ Route::middleware('admin')->group(function () {
     Route::post('/update-terms-conditions',[SettingController::class, 'update_terms_conditions']);
     Route::get('/about-us',[SettingController::class, 'about_us']);
     Route::post('/update-about-us',[SettingController::class, 'update_about_us']);
-    Route::get('/how-it-works', [SettingController::class, 'how_it_works']);
+    Route::get('/video-tutorials', [SettingController::class, 'how_it_works'])->name('video-tutorials.index');
+    Route::get('/how-it-works', function() {
+        return redirect()->route('video-tutorials.index');
+    });
     Route::post('/video-tutorial/module', [VideoTutorialController::class, 'storeModule'])->name('video-tutorial.store-module');
     Route::post('/video-tutorial/module/{id}/update', [VideoTutorialController::class, 'updateModule'])->name('video-tutorial.update-module');
     Route::post('/video-tutorial/module/{id}/delete', [VideoTutorialController::class, 'destroyModule'])->name('video-tutorial.destroy-module');

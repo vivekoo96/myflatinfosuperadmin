@@ -154,7 +154,7 @@ class ClassifiedController extends Controller
                 $allowedfileExtension = ['jpeg', 'jpg', 'png'];
                 $extension = $file->getClientOriginalExtension();
                 $filename = 'classifieds/' . uniqid() . '.' . $extension;
-                $path = $file->move(public_path('/images/classifieds/'), $filename);
+                $path = $file->move(public_path('/images/'), $filename);
 
                 $photo = new ClassifiedPhoto();
                 $photo->classified_id = $classified->id;

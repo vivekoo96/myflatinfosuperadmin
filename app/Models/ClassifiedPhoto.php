@@ -19,15 +19,10 @@ class ClassifiedPhoto extends Model
     
     public function getPhotoAttribute($value)
     {
-        if($value != ''){
-            // return Cache::remember("signed_url_{$value}", now()->addMinutes(10), function () use ($value) {
-            //     return Storage::disk('s3')->temporaryUrl($value, now()->addMinutes(10)); // Expires in 10 min
-            // });
-            if ($this->classified && $this->classified->building_id == 0) {
-                return asset('public/images/'.$value);
-            }
-           return asset('public/images/' . $value);
-           
+        if ($value != '') {
+            $filename = (strpos($value, 'classifieds/') === 0) ? substr($value, 12) : $value;
+            
+            return asset('public/images/classifieds/' . $filename);
         }
     }
     

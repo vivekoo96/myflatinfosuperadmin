@@ -302,7 +302,13 @@ $(function () {
         method: 'POST',
         data: { _token: '{{ csrf_token() }}', _method: 'DELETE', action: isRestore ? 'restore' : 'delete' },
         success: function () { location.reload(); },
-        error: function (xhr) { alert(xhr.responseJSON ? xhr.responseJSON.error : 'Failed.'); }
+        error: function (xhr) {
+          var json = xhr.responseJSON;
+          var msg = (json && json.error) ? json.error
+                  : (json && json.message) ? json.message
+                  : 'Failed.';
+          alert(msg);
+        }
       });
     };
     $('#confirmModal').modal('show');
