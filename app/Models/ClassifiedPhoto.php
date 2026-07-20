@@ -20,7 +20,7 @@ class ClassifiedPhoto extends Model
     public function getPhotoAttribute($value)
     {
         if ($value != '') {
-            $filename = (strpos($value, 'classifieds/') === 0) ? substr($value, 12) : $value;
+            $filename = basename($value);
             
             return asset('public/images/classifieds/' . $filename);
         }

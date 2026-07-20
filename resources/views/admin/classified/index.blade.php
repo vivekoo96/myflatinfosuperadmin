@@ -93,11 +93,32 @@
                         @endphp
                     
                         @if(!empty($photos) && count($photos) > 0)
-                            <a href="{{ $photos[0]['photo'] }}"
-                               target="_blank"
-                               class="text-primary" style="text-decoration:underline">
-                                View Image
-                            </a>
+                            @if(count($photos) === 1)
+                                @php
+                                    $photoObj = is_array($photos) ? $photos[0] : $photos->first();
+                                    $photoUrl = is_array($photoObj) ? $photoObj['photo'] : (is_object($photoObj) ? $photoObj->photo : '');
+                                @endphp
+                                @if($photoUrl)
+                                    <a href="{{ $photoUrl }}"
+                                       target="_blank"
+                                       class="text-primary" style="text-decoration:underline">
+                                        View Image
+                                    </a>
+                                @endif
+                            @else
+                                @foreach($photos as $index => $photoObj)
+                                    @php
+                                        $photoUrl = is_array($photoObj) ? $photoObj['photo'] : (is_object($photoObj) ? $photoObj->photo : '');
+                                    @endphp
+                                    @if($photoUrl)
+                                        <a href="{{ $photoUrl }}"
+                                           target="_blank"
+                                           class="text-primary" style="text-decoration:underline; margin-right: 8px; white-space: nowrap;">
+                                            View Image {{ $index + 1 }}
+                                        </a>
+                                    @endif
+                                @endforeach
+                            @endif
                         @else
                             <span>No Image</span>
                         @endif
